@@ -152,6 +152,18 @@ app.factory('api', function($http, $q) {
 			});
 		});
 	}
+	api.sound = function() {
+		return $q(function(resolve, reject) {
+			$http({
+				method:'GET',
+				url:'http://localhost:8080/api/sound'
+			}).success(function(data, status) {
+				// do nothing
+			}).error(function(data, status) {
+				// do nothing
+			});
+		});
+	}
 	return api;
 });
 
@@ -169,6 +181,8 @@ app.controller('TeamStatsCtrl', function ($scope, $http, api) {
 			$scope.data = data;
 			if ($scope.dateTime != data.dateTime) {
 				// new game
+                console.log('find new tmp-replay file: ' + status);
+				api.sound();
 				$scope.players = [];
 				$scope.dateTime = data.dateTime;
 				for (var i=0; i<data.vehicles.length; i++) {

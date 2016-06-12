@@ -182,5 +182,14 @@ router.get('/arena', jsonParser, function(req, res) {
 		res.sendStatus(400);
 });
 
+router.get('/sound', jsonParser, function(req, res) {
+	console.log('soud api is called');
+	if (process.platform == 'win32' && process.env.WOWS_SOUND_FILE) {
+		var spawnSync = require('child_process').spawnSync;
+		spawnSync("cmd", ["/C", "start", '"notify mm"','"' + process.env.WOWS_SOUND_FILE, '"'], {stdio: "inherit", windowsVerbatimArguments: true});
+	}
+	res.sendStatus(200);
+});
+
 app.listen(port);
 console.log('wows-stats is running on port: ' + port);
